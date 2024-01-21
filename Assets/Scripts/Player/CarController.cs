@@ -34,17 +34,17 @@ public class CarController : MonoBehaviour {
         velocityVsUp = Vector2.Dot(transform.up, carRigidbody2D.velocity);
 
         // lim speed in forward direction based on maxSpeed
-        if(velocityVsUp > car.currentMaxSpeed && accelerationInput > 0){
+        if(velocityVsUp > car.CurrentMaxSpeed && accelerationInput > 0){
             return;
         }
 
         // lim speed in reverse direction based on maxSpeed / 2
-        if(velocityVsUp < car.currentMaxSpeed * -0.5f && accelerationInput < 0){
+        if(velocityVsUp < car.CurrentMaxSpeed * -0.5f && accelerationInput < 0){
             return;
         }
 
         // lim speed in any direction while accel
-        if(carRigidbody2D.velocity.sqrMagnitude > car.currentMaxSpeed * car.currentMaxSpeed && accelerationInput > 0){
+        if(carRigidbody2D.velocity.sqrMagnitude > car.CurrentMaxSpeed * car.CurrentMaxSpeed && accelerationInput > 0){
             return;
         }
         
@@ -57,7 +57,7 @@ public class CarController : MonoBehaviour {
         }
 
         // create force for engine
-        Vector2 engineForceVector = transform.up * accelerationInput * car.currentAccelerationFactor;
+        Vector2 engineForceVector = transform.up * accelerationInput * car.CurrentAccelerationFactor;
 
         // apply force and push car forward
         carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour {
         minSpeedBeforeAllowTurningFactor = Mathf.Clamp01(minSpeedBeforeAllowTurningFactor);
 
         // update rotation angle based on input
-        rotationAngle -= steeringInput * car.currentTurnFactor * minSpeedBeforeAllowTurningFactor;
+        rotationAngle -= steeringInput * car.CurrentTurnFactor * minSpeedBeforeAllowTurningFactor;
 
         // apply steering by rotationg car object
         carRigidbody2D.MoveRotation(rotationAngle);
@@ -79,10 +79,13 @@ public class CarController : MonoBehaviour {
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
         Vector2 rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
 
-        carRigidbody2D.velocity = forwardVelocity + rightVelocity * car.currentDriftFactor;
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * car.CurrentDriftFactor;
     }
 
     public void SetInputVector(Vector2 inputVector){
+        if(GameManager.instance.isGameOver){
+            return;
+        }
         steeringInput = inputVector.x;
         accelerationInput = inputVector.y;
     }

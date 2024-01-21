@@ -13,7 +13,6 @@ public class BubbleBehavior : DefenseBehavior
 
     public override void OnTriggerEnter2D(Collider2D col){
         if(col.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject)){
-            
             EnemyStats enemy = col.GetComponent<EnemyStats>();
             enemy.TakeDamage(currentDamage);
 

@@ -16,6 +16,9 @@ public class EnemyStats : MonoBehaviour
     [HideInInspector]
     public float currentDamage;
 
+    public float despawnDistance = 20f;
+    Transform player;
+
     // bool
     bool isKbActive = false;
     bool isDead = false;
@@ -32,9 +35,14 @@ public class EnemyStats : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyMovement = GetComponent<EnemyMovement>();
         enemyCollider = GetComponent<Collider2D>();
+        player = FindObjectOfType<CarStats>().transform;
     }
 
     void Update(){
+        // despawn
+        if(Vector2.Distance(transform.position, player.position) >= despawnDistance){
+            ReturnEnemy();
+        }
         // gradually reduce velocity over time when kb active
         if(isKbActive){
             enemyMovement.enabled = false;
@@ -47,6 +55,10 @@ public class EnemyStats : MonoBehaviour
                 enemyMovement.enabled = true;
             }
             isKbActive = false;
+        }
+        // if dead and not moving, then Destroy(...)
+        if(isDead && !isKbActive){
+            StartCoroutine(FadeOutAndDestroy());
         }
     }
     
@@ -65,8 +77,7 @@ public class EnemyStats : MonoBehaviour
         enemyMovement.enabled = false;
         isDead = true;
         enemyCollider.enabled = false;
-        // drop health pick-up -- spawns after 10 sec rn
-        Destroy(gameObject, 10.0f); 
+        // health drop on Destroy(...)
     }
 
     public void ApplyKnockback(Vector2 knockbackForce){   
@@ -74,5 +85,43 @@ public class EnemyStats : MonoBehaviour
         rb.AddForce(knockbackForce, ForceMode2D.Impulse);
         
         isKbActive = true;
+    }
+
+
+    // base dmg of car if add more weapons later (different shield types maybe)
+    // private void OnCollisionStay2D(Collision2D col) {
+    //     if(col.gameObject.CompareTag("Player")){
+    //         CarStats car = col.gameObject.GetComponent<CarStats>();
+    //         car.TakeDamage(currentDamage);
+    //     }
+    // }
+
+    IEnumerator FadeOutAndDestroy()
+    {
+        // gradually fade out enemy
+        float fadeDuration = 2f;
+        float timer = 0f;
+        Color startColor = GetComponent<SpriteRenderer>().color;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+            GetComponent<SpriteRenderer>().color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+            yield return null;
+        }
+
+        // destroy gameObject after fading out
+        Destroy(gameObject);
+    }
+    private void OnDestroy() {
+        EnemySpawner es = FindObjectOfType<EnemySpawner>();
+        es.OnEnemyKilled();
+    }
+
+    // move enemy to random spawn point when called
+    void ReturnEnemy(){
+        EnemySpawner es = FindObjectOfType<EnemySpawner>();
+        transform.position = player.position + es.relativeSpawnPoints[Random.Range(0, es.relativeSpawnPoints.Count)].position;
     }
 }

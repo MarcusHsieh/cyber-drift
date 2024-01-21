@@ -6,20 +6,98 @@ public class CarStats : MonoBehaviour{
     CarScriptableObject carData;
 
     // current stats
-    [HideInInspector]
-    public float currentMaxHealth;
-    [HideInInspector]
-    public float currentRecovery;
-    [HideInInspector]
-    public float currentDamage;
-    [HideInInspector]
-    public float currentDriftFactor;
-    [HideInInspector]
-    public float currentAccelerationFactor;
-    [HideInInspector]
-    public float currentTurnFactor;
-    [HideInInspector]
-    public float currentMaxSpeed;
+    float currentMaxHealth;
+    float currentRecovery;
+    float currentDamage;
+    float currentDriftFactor;
+    float currentAccelerationFactor;
+    float currentTurnFactor;
+    float currentMaxSpeed;
+
+    #region Current Stat Properties
+    public float CurrentMaxHealth{
+        get { return currentMaxHealth; }
+        set {
+            // if change
+            if(currentMaxHealth != value){
+                currentMaxHealth = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentHealthDisplay.text = "Health: " + currentMaxHealth;
+                }
+            }
+        }
+    }
+    public float CurrentRecovery{
+        get { return currentRecovery; }
+        set {
+            // if change
+            if(currentRecovery != value){
+                currentRecovery = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentRecoveryDisplay.text = "Recovery: " + currentRecovery;
+                }
+            }
+        }
+    }
+    public float CurrentDamage{
+        get { return currentDamage; }
+        set {
+            // if change
+            if(currentDamage != value){
+                currentDamage = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentDamageDisplay.text = "Damage: " + currentDamage;
+                }
+            }
+        }
+    }
+    public float CurrentDriftFactor{
+        get { return currentDriftFactor; }
+        set {
+            // if change
+            if(currentDriftFactor != value){
+                currentDriftFactor = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentDriftDisplay.text = "Drift: " + currentDriftFactor;
+                }
+            }
+        }
+    }
+    public float CurrentAccelerationFactor{
+        get { return currentAccelerationFactor; }
+        set {
+            // if change
+            if(currentAccelerationFactor != value){
+                currentAccelerationFactor = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentAccelDisplay.text = "Acceleration: " + currentAccelerationFactor;
+                }
+            }
+        }
+    }
+    public float CurrentTurnFactor{
+        get { return currentTurnFactor; }
+        set {
+            // if change
+            if(currentTurnFactor != value){
+                currentTurnFactor = value;
+                if(GameManager.instance != null){
+                    GameManager.instance.currentHandlingDisplay.text = "Handling: " + currentTurnFactor;
+                }
+            }
+        }
+    }
+    public float CurrentMaxSpeed{
+        get { return currentMaxSpeed; }
+        set {
+            // if change
+            if(currentMaxSpeed != value){
+                currentMaxSpeed = value;
+                GameManager.instance.currentSpeedDisplay.text = "Speed: " + currentMaxSpeed;
+            }
+        }
+    }
+    #endregion
     
 
     // I-Frames
@@ -34,13 +112,13 @@ public class CarStats : MonoBehaviour{
         carData = CarSelector.GetData();
         CarSelector.instance.DestroySingleton();
 
-        currentMaxHealth = carData.MaxHealth;
-        currentRecovery = carData.Recovery;
-        currentDamage = carData.Damage;
-        currentDriftFactor = carData.DriftFactor;
-        currentAccelerationFactor = carData.AccelerationFactor;
-        currentTurnFactor = carData.TurnFactor;
-        currentMaxSpeed = carData.MaxSpeed;
+        CurrentMaxHealth = carData.MaxHealth;
+        CurrentRecovery = carData.Recovery;
+        CurrentDamage = carData.Damage;
+        CurrentDriftFactor = carData.DriftFactor;
+        CurrentAccelerationFactor = carData.AccelerationFactor;
+        CurrentTurnFactor = carData.TurnFactor;
+        CurrentMaxSpeed = carData.MaxSpeed;
     }
 
     void Update(){
@@ -57,38 +135,39 @@ public class CarStats : MonoBehaviour{
 
     public void TakeDamage(float dmg){
         if(!isInvincible){
-            currentMaxHealth -= dmg;
+            CurrentMaxHealth -= dmg;
             invincibilityTimer = invincibilityDuration;
             isInvincible = true;
         }
 
-        if(currentMaxHealth <= 0){
+        if(CurrentMaxHealth <= 0){
             Kill();
         } 
     }
 
     public void Kill(){
-        //Destroy(gameObject);
-        Debug.Log("Dead");
+        if(!GameManager.instance.isGameOver){
+            GameManager.instance.GameOver();
+        }
     }
 
     public void RestoreHealth(float amount){
-        if(currentMaxHealth < carData.MaxHealth){
+        if(CurrentMaxHealth < carData.MaxHealth){
             // ensure doesn't exceed max health
-            if(amount > (carData.MaxHealth - currentMaxHealth)){
-                currentMaxHealth = carData.MaxHealth;
+            if(amount > (carData.MaxHealth - CurrentMaxHealth)){
+                CurrentMaxHealth = carData.MaxHealth;
             }
             // if < max health heal x amount
             else{
-                currentMaxHealth += amount;
+                CurrentMaxHealth += amount;
             }
         }
     }
 
     private void OnCollisionStay2D(Collision2D col) {
-        if(col.gameObject.CompareTag("Player")){
+        if(col.gameObject.CompareTag("Enemy")){
             CarStats car = col.gameObject.GetComponent<CarStats>();
-            car.TakeDamage(currentDamage);
+            car.TakeDamage(CurrentDamage);
         }
     }
 

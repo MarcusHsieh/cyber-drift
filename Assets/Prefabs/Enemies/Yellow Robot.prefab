@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 412738276658522659}
   - component: {fileID: 2126247091210001486}
   m_Layer: 0
-  m_Name: Robot
+  m_Name: Yellow Robot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2059267460, guid: 40cde595da6a3084d93c9d4ea1da5761, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.875397, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   drops:
   - name: Health drop
     itemPrefab: {fileID: 744808165115817394, guid: addf10ac30b538e428afac81b8183217, type: 3}
-    dropRate: 40
+    dropRate: 100
 --- !u!114 &412738276658522659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5949a9f416c95c04b86299a8e8c1cf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: ce0ac44d8f888dc479377b1ec2923bb5, type: 2}
+  enemyData: {fileID: 11400000, guid: 8473ce48d35b7a3429f8646056f8a998, type: 2}
   newSprite: {fileID: -2131973586, guid: 8e4494c94efd0de46a462e81db08364e, type: 3}
   currentMoveSpeed: 0
   currentHealth: 0

@@ -13,6 +13,9 @@ public class CarInputHandler : MonoBehaviour {
     }
 
     void Update() {
+        if(GameManager.instance.isGameOver){
+            return;
+        }
         inputVector = Vector2.zero;
 
         inputVector.x = Input.GetAxisRaw("Horizontal");
