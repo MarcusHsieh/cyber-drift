@@ -9,19 +9,15 @@ public class BubbleBehavior : DefenseBehavior
     public override void Start(){
         // don't want to run base.Start() because don't want to destroy
         markedEnemies = new List<GameObject>();
-        Debug.Log(currentHitsToDestroy);
     }
 
     public override void OnTriggerEnter2D(Collider2D col){
-        Debug.Log("Col"); 
-        Debug.Log(currentHitsToDestroy);
         if(col.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject)){
             
             EnemyStats enemy = col.GetComponent<EnemyStats>();
             enemy.TakeDamage(currentDamage);
 
             currentHits++;
-            Debug.Log("Hit!");
 
             // mark enemy
             markedEnemies.Add(col.gameObject);  

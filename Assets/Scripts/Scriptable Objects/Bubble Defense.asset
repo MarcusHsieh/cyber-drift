@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bubble Defense
   m_EditorClassIdentifier: 
   prefab: {fileID: 3273872532288413207, guid: ac97967dd2ab9b24e9c43c3f75ac3959, type: 3}
-  damage: 3
+  damage: 100
   hitsToDestroy: 2
   cooldownDuration: 0

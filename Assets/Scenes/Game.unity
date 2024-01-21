@@ -187,6 +187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: ce0ac44d8f888dc479377b1ec2923bb5, type: 2}
   newSprite: {fileID: -2131973586, guid: 8e4494c94efd0de46a462e81db08364e, type: 3}
+  currentMoveSpeed: 0
+  currentHealth: 0
+  currentDamage: 0
 --- !u!50 &389855974
 Rigidbody2D:
   serializedVersion: 4
@@ -507,6 +510,8 @@ GameObject:
   - component: {fileID: 1580270305}
   - component: {fileID: 1580270302}
   - component: {fileID: 1580270301}
+  - component: {fileID: 1580270306}
+  - component: {fileID: 1580270307}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -539,10 +544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382a2d3c8b8aec147a02066b14e52462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driftFactor: 0.95
-  accelerationFactor: 30
-  turnFactor: 4.5
-  maxSpeed: 20
 --- !u!50 &1580270303
 Rigidbody2D:
   serializedVersion: 4
@@ -633,6 +634,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7823441, y: 1.0680174}
   m_EdgeRadius: 0
+--- !u!114 &1580270306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580270300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b60464276c1364eabdad1c5445ff55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMaxHealth: 0
+  currentRecovery: 0
+  currentDamage: 0
+  currentDriftFactor: 0
+  currentAccelerationFactor: 0
+  currentTurnFactor: 0
+  currentMaxSpeed: 0
+  invincibilityDuration: 0.5
+--- !u!114 &1580270307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580270300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f0322cb5c2e404dbbdc0d6879f015d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1620162136
 GameObject:
   m_ObjectHideFlags: 0

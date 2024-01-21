@@ -5,13 +5,18 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public EnemyScriptableObject enemyData;
-    //public SpriteRenderer spriteRenderer;
+    
     public Sprite newSprite;
 
     // current stats
-    float currentMoveSpeed;
-    float currentHealth;
-    float currentDamage;
+    [HideInInspector]
+    public float currentMoveSpeed;
+    [HideInInspector]
+    public float currentHealth;
+    [HideInInspector]
+    public float currentDamage;
+
+    // bool
     bool isKbActive = false;
     bool isDead = false;
 
@@ -60,8 +65,8 @@ public class EnemyStats : MonoBehaviour
         enemyMovement.enabled = false;
         isDead = true;
         enemyCollider.enabled = false;
-        // drop health pick-up
-        Destroy(gameObject, 10.0f);
+        // drop health pick-up -- spawns after 10 sec rn
+        Destroy(gameObject, 10.0f); 
     }
 
     public void ApplyKnockback(Vector2 knockbackForce){   

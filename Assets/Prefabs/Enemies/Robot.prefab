@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7991406020969328361}
   - component: {fileID: 3597652266934791137}
   - component: {fileID: 8131412975978879169}
+  - component: {fileID: -467554459588133847}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -166,3 +167,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: ce0ac44d8f888dc479377b1ec2923bb5, type: 2}
+--- !u!114 &-467554459588133847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519282343468190618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82decc2af7ada5e42896dbe06142ddb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - name: Health drop
+    itemPrefab: {fileID: 744808165115817394, guid: addf10ac30b538e428afac81b8183217, type: 3}
+    dropRate: 100

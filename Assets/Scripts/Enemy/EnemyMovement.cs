@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public EnemyScriptableObject enemyData;
+    // public EnemyScriptableObject enemyData;
+    EnemyStats enemy;
     Transform player;
 
     void Start()
     {
+        enemy = GetComponent<EnemyStats>();
         player = FindObjectOfType<CarController>().transform;
     }
 
@@ -16,6 +18,6 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         // move towards player
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemyData.MoveSpeed * Time.deltaTime); 
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.currentMoveSpeed * Time.deltaTime); 
     }
 }

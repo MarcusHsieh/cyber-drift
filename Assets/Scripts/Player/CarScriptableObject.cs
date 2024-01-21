@@ -12,6 +12,9 @@ public class CarScriptableObject : ScriptableObject {
     float recovery;
     public float Recovery { get => recovery; private set => recovery = value; }
     [SerializeField]
+    float damage;
+    public float Damage { get => damage; private set => damage = value; }
+    [SerializeField]
     float driftFactor;
     public float DriftFactor { get => driftFactor; private set => driftFactor = value; }
     [SerializeField]

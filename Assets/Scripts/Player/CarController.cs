@@ -13,9 +13,10 @@ public class CarController : MonoBehaviour {
 
     // Components
     Rigidbody2D carRigidbody2D;
-    public CarScriptableObject carData;
+    CarStats car;
 
     void Awake() {
+        car = GetComponent<CarStats>();
         carRigidbody2D = GetComponent<Rigidbody2D>();
     }
     
@@ -33,17 +34,17 @@ public class CarController : MonoBehaviour {
         velocityVsUp = Vector2.Dot(transform.up, carRigidbody2D.velocity);
 
         // lim speed in forward direction based on maxSpeed
-        if(velocityVsUp > carData.MaxSpeed && accelerationInput > 0){
+        if(velocityVsUp > car.currentMaxSpeed && accelerationInput > 0){
             return;
         }
 
         // lim speed in reverse direction based on maxSpeed / 2
-        if(velocityVsUp < carData.MaxSpeed * -0.5f && accelerationInput < 0){
+        if(velocityVsUp < car.currentMaxSpeed * -0.5f && accelerationInput < 0){
             return;
         }
 
         // lim speed in any direction while accel
-        if(carRigidbody2D.velocity.sqrMagnitude > carData.MaxSpeed * carData.MaxSpeed && accelerationInput > 0){
+        if(carRigidbody2D.velocity.sqrMagnitude > car.currentMaxSpeed * car.currentMaxSpeed && accelerationInput > 0){
             return;
         }
         
@@ -56,7 +57,7 @@ public class CarController : MonoBehaviour {
         }
 
         // create force for engine
-        Vector2 engineForceVector = transform.up * accelerationInput * carData.AccelerationFactor;
+        Vector2 engineForceVector = transform.up * accelerationInput * car.currentAccelerationFactor;
 
         // apply force and push car forward
         carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);
@@ -68,7 +69,7 @@ public class CarController : MonoBehaviour {
         minSpeedBeforeAllowTurningFactor = Mathf.Clamp01(minSpeedBeforeAllowTurningFactor);
 
         // update rotation angle based on input
-        rotationAngle -= steeringInput * carData.TurnFactor * minSpeedBeforeAllowTurningFactor;
+        rotationAngle -= steeringInput * car.currentTurnFactor * minSpeedBeforeAllowTurningFactor;
 
         // apply steering by rotationg car object
         carRigidbody2D.MoveRotation(rotationAngle);
@@ -78,7 +79,7 @@ public class CarController : MonoBehaviour {
         Vector2 forwardVelocity = transform.up * Vector2.Dot(carRigidbody2D.velocity, transform.up);
         Vector2 rightVelocity = transform.right * Vector2.Dot(carRigidbody2D.velocity, transform.right);
 
-        carRigidbody2D.velocity = forwardVelocity + rightVelocity * carData.DriftFactor;
+        carRigidbody2D.velocity = forwardVelocity + rightVelocity * car.currentDriftFactor;
     }
 
     public void SetInputVector(Vector2 inputVector){

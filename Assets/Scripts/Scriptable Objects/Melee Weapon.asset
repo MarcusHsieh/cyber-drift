@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Melee Weapon
   m_EditorClassIdentifier: 
   prefab: {fileID: 2423209799381611812, guid: d9bd9ad91a132f746a32a149e2432a67, type: 3}
-  damage: 3
+  damage: 100
   cooldownDuration: 0
   knockbackForce: 10
