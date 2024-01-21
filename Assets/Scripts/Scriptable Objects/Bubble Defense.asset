@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7df42887070014ab7e35dee94ae02d, type: 3}
+  m_Name: Bubble Defense
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3273872532288413207, guid: ac97967dd2ab9b24e9c43c3f75ac3959, type: 3}
+  damage: 3
+  hitsToDestroy: 2
+  cooldownDuration: 0

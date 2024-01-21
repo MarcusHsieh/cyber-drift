@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7881871296382515646}
   - component: {fileID: 6934783030167142007}
   - component: {fileID: 543509555495689935}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tree_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1134238141
+  m_SortingLayer: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: -1337156641, guid: 4af3b0f7905def4499223eea2ef05887, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.07313633, y: -0.59766245}
+  m_Offset: {x: 0.07313633, y: -2.4617586}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -128,5 +128,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5206814, y: 4.710925}
+  m_Size: {x: 2.5206814, y: 0.9827328}
   m_EdgeRadius: 0
