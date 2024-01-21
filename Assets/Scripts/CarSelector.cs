@@ -20,6 +20,7 @@ public class CarSelector : MonoBehaviour
         return instance.carData;
     }
 
+
     public void SelectCar(CarScriptableObject car){
         carData = car;
     }

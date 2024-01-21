@@ -19,6 +19,15 @@ public class EnemyStats : MonoBehaviour
     public float despawnDistance = 20f;
     Transform player;
 
+    [Header("Damage Flash")]
+    public Color damageColor = new Color(1,0,0,1);
+    public float damageFlashDuration = 0.2f;
+    public float deathFadeTime = 0.6f;
+    Color originalColor;
+    SpriteRenderer sr;
+    EnemyMovement movement;
+
+
     // bool
     bool isKbActive = false;
     bool isDead = false;
@@ -36,6 +45,10 @@ public class EnemyStats : MonoBehaviour
         enemyMovement = GetComponent<EnemyMovement>();
         enemyCollider = GetComponent<Collider2D>();
         player = FindObjectOfType<CarStats>().transform;
+
+        sr = GetComponent<SpriteRenderer>();
+        originalColor = sr.color;
+        movement = GetComponent<EnemyMovement>();
     }
 
     void Update(){
@@ -64,11 +77,22 @@ public class EnemyStats : MonoBehaviour
     
     public void TakeDamage(float dmg){
         currentHealth -= dmg;
+        StartCoroutine(DamageFlash());
+        if(dmg > 0){
+            GameManager.GenerateFloatingText(Mathf.FloorToInt(dmg).ToString(), transform);
+        }
 
         if(currentHealth <= 0){
             Kill();
         }
     }
+
+    IEnumerator DamageFlash(){
+        sr.color = damageColor;
+        yield return new WaitForSeconds(damageFlashDuration);
+        sr.color = originalColor;
+    }
+
 
     public void Kill(){
         // ragdoll

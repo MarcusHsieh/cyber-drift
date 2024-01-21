@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14fb78a320deabf4bae078cc400cfd9a, type: 3}
   m_Name: Car 2
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 120
   recovery: 0.1
   damage: 100
   driftFactor: 0.95

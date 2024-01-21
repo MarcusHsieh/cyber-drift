@@ -22,5 +22,8 @@ public class DefenseScriptableObject : ScriptableObject {
     float cooldownDuration;
     public float CooldownDuration { get => cooldownDuration; private set => cooldownDuration = value; }
 
+    [SerializeField]
+    float knockbackForce;
+    public float KnockbackForce { get => knockbackForce; private set => knockbackForce = value; }
 }
 

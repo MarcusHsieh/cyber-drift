@@ -19,6 +19,16 @@ public class GameManager : MonoBehaviour{
     public GameObject pauseScreen;
     public GameObject resultsScreen;
 
+    [Header("Damage Text Popup")]
+    public Canvas damageTextCanvas;
+    public float textFontSize = 20;
+    public TMP_FontAsset textFont;
+    public Camera referenceCamera;
+    [Header("Stopwatch")]
+    public float timeLimit;
+    float stopwatchTime;
+    public TMP_Text stopwatchDisplay;
+
     // Current stat displays
     public TMP_Text currentHealthDisplay;
     public TMP_Text currentRecoveryDisplay;
@@ -48,6 +58,7 @@ public class GameManager : MonoBehaviour{
         switch (currentState){
             case GameState.Gameplay:
                 CheckForPauseAndResume();
+                UpdateStopwatch();
                 break;
             
             case GameState.Paused:
@@ -68,6 +79,12 @@ public class GameManager : MonoBehaviour{
                 Debug.LogWarning("nonexistent state");
                 break;
         }
+    }
+
+    public static void GenerateFloatingText(string text, Transform target, float duration = 1f, float speed = 1f){
+        if(!instance.damageTextCanvas) { return; }
+        if(!instance.referenceCamera) { instance.referenceCamera = Camera.main; }
+        instance.StartCoroutine(instance.GenerateFloatingTextCoroutine(text, target, duration, speed));
     }
 
     // change state of game
@@ -116,5 +133,55 @@ public class GameManager : MonoBehaviour{
 
     void DisplayResults(){
         resultsScreen.SetActive(true);
+    }
+
+    IEnumerator GenerateFloatingTextCoroutine(string text, Transform target, float duration = 1f, float speed = 50f){
+        GameObject textObj = new GameObject("Damage Floating Text");
+        RectTransform rect = textObj.AddComponent<RectTransform>();
+        TextMeshProUGUI tmPro = textObj.AddComponent<TextMeshProUGUI>();
+        tmPro.text = text;
+        tmPro.horizontalAlignment = HorizontalAlignmentOptions.Center;
+        tmPro.verticalAlignment = VerticalAlignmentOptions.Middle;
+        tmPro.fontSize = textFontSize;
+        if (textFont) tmPro.font = textFont;
+        rect.position = referenceCamera.WorldToScreenPoint(target.position);
+
+        Destroy(textObj, duration);
+
+        textObj.transform.SetParent(instance.damageTextCanvas.transform);
+
+        WaitForEndOfFrame w = new WaitForEndOfFrame();
+        float t = 0;
+        float yOffset = 0;
+        while(t < duration){
+            // wait for frame and update time
+            yield return w;
+            t += Time.deltaTime;
+
+            // fade text 
+            tmPro.color = new Color(tmPro.color.r, tmPro.color.g, tmPro.color.b, 1-t/duration);
+
+            // float text up
+            yOffset += speed * Time.deltaTime;
+            rect.position = referenceCamera.WorldToScreenPoint(target.position + new Vector3(0, yOffset));
+        }
+    }
+
+    void UpdateStopwatch(){
+        stopwatchTime += Time.deltaTime;
+
+        UpdateStopwatchDisplay();
+
+        if(stopwatchTime >= timeLimit){
+            GameOver();
+        }
+    }
+
+    void UpdateStopwatchDisplay(){
+        int minutes = Mathf.FloorToInt(stopwatchTime/60);
+        int seconds = Mathf.FloorToInt(stopwatchTime%60);
+
+        stopwatchDisplay.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
     }
 }

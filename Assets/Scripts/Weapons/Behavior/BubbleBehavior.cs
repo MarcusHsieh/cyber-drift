@@ -13,10 +13,19 @@ public class BubbleBehavior : DefenseBehavior
 
     public override void OnTriggerEnter2D(Collider2D col){
         if(col.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject)){
+            
             EnemyStats enemy = col.GetComponent<EnemyStats>();
             enemy.TakeDamage(currentDamage);
 
+            Rigidbody2D playerRigidbody = GetComponentInParent<Rigidbody2D>();
+            Vector2 knockbackDirection = playerRigidbody.velocity.normalized;
+            Vector2 knockbackForceVector = knockbackDirection * defenseData.KnockbackForce;
+
+            // inc currentHits
             currentHits++;
+
+            // apply knockback force to enemy
+            enemy.ApplyKnockback(knockbackForceVector);
 
             // mark enemy
             markedEnemies.Add(col.gameObject);  

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarStats : MonoBehaviour{
-    CarScriptableObject carData;
+
+    public CarScriptableObject carData;
 
     // current stats
     float currentMaxHealth;
@@ -100,10 +102,13 @@ public class CarStats : MonoBehaviour{
     #endregion
     
 
-    // I-Frames
+    [Header("I-Frames")]
     public float invincibilityDuration;
     float invincibilityTimer;
     bool isInvincible;
+
+    [Header("UI")]
+    public Image healthBar;
 
     void Awake()
     {   
@@ -119,6 +124,8 @@ public class CarStats : MonoBehaviour{
         CurrentAccelerationFactor = carData.AccelerationFactor;
         CurrentTurnFactor = carData.TurnFactor;
         CurrentMaxSpeed = carData.MaxSpeed;
+
+        UpdateHealthBar();
     }
 
     void Update(){
@@ -143,12 +150,18 @@ public class CarStats : MonoBehaviour{
         if(CurrentMaxHealth <= 0){
             Kill();
         } 
+
+        UpdateHealthBar();
     }
 
     public void Kill(){
         if(!GameManager.instance.isGameOver){
             GameManager.instance.GameOver();
         }
+    }
+    void UpdateHealthBar(){
+        // update health bar
+        healthBar.fillAmount = CurrentMaxHealth / carData.MaxHealth;
     }
 
     public void RestoreHealth(float amount){
@@ -161,15 +174,23 @@ public class CarStats : MonoBehaviour{
             else{
                 CurrentMaxHealth += amount;
             }
+            UpdateHealthBar();
         }
     }
 
     private void OnCollisionStay2D(Collision2D col) {
         if(col.gameObject.CompareTag("Enemy")){
-            CarStats car = col.gameObject.GetComponent<CarStats>();
-            car.TakeDamage(CurrentDamage);
+            EnemyStats enemy = col.gameObject.GetComponent<EnemyStats>();
+            this.TakeDamage(enemy.currentDamage);
         }
     }
+
+    // private void OnCollisionStay2D(Collision2D col) {
+    //     if(col.gameObject.CompareTag("Enemy")){
+    //         CarStats car = col.gameObject.GetComponent<CarStats>();
+    //         car.TakeDamage(CurrentDamage);
+    //     }
+    // }
 
 
 }
