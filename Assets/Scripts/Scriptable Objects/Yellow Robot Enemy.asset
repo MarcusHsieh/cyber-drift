@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Yellow Robot Enemy
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  maxHealth: 50
+  maxHealth: 60
   damage: 40
   knockbackDamping: 2

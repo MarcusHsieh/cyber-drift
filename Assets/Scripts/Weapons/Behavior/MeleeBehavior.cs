@@ -19,7 +19,10 @@ public class MeleeBehavior : MeleeWeaponBehavior
         if(col.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject)){
             
             EnemyStats enemy = col.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);
+            float damageMultiplier = Mathf.Max(0, GetComponentInParent<Rigidbody2D>().velocity.magnitude);
+            float totalDamage = currentDamage * damageMultiplier;
+            enemy.TakeDamage(totalDamage);
+            // enemy.TakeDamage(currentDamage);
             
             Rigidbody2D playerRigidbody = GetComponentInParent<Rigidbody2D>();
             Vector2 knockbackDirection = playerRigidbody.velocity.normalized;
@@ -32,7 +35,7 @@ public class MeleeBehavior : MeleeWeaponBehavior
             markedEnemies.Add(col.gameObject);  
 
             // coroutine to remove enemy from list after X sec -- prevent multi hit
-            StartCoroutine(RemoveEnemyAfterDelay(col.gameObject, 1f));
+            StartCoroutine(RemoveEnemyAfterDelay(col.gameObject, 0.5f));
         }
     }
 
